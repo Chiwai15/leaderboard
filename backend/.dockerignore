@@ -1,0 +1,44 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+
+# Virtual environments
+venv/
+.env/
+.env.*
+ENV/
+.venv/
+
+# Git files
+.git
+.gitignore
+
+# Local settings & secrets
+instance/
+*.db
+*.sqlite3
+*.log
+
+# Docker & build
+Dockerfile*
+docker-compose*
+*.pid
+
+# Test-related
+.pytest_cache/
+.coverage
+htmlcov/
+tests/
+
+# IDEs & editors
+*.swp
+.idea/
+.vscode/
+*.code-workspace
+
+# System files
+.DS_Store
+Thumbs.db

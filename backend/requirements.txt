@@ -2,7 +2,9 @@ flask==3.0.0
 flask-sqlalchemy==3.1.1
 flask-jwt-extended==4.5.3
 pymysql==1.1.0
-python-dotenv==1.0.1
-cryptography==44.0.2
+python-dotenv
+cryptography
 pydantic[email]>=2.5
-pytest==8.1.1
+redis==5.0.1
+gunicorn==23.0.0
+flask-cors==5.0.1
