@@ -1,0 +1,19 @@
+# === Global OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Logs / Backups ===
+*.log
+*.bak
+*.tmp
+
+# === Python SQLite at root (if ever used) ===
+*.sqlite3
+*.db
+
+# === Docker at root ===
+docker-compose.override.yml
+
+# === Ignore .env at root ===
+.env
+.env.*

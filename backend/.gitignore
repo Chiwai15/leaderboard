@@ -1,0 +1,52 @@
+# === Python Bytecode & Cache ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg
+*.egg-info/
+
+# === Virtual Environments ===
+env/
+venv/
+ENV/
+.venv/
+
+# === Editor / IDE Config ===
+.idea/
+.vscode/
+
+# === Local Databases (e.g., SQLite) ===
+*.db
+*.sqlite3
+instance/
+
+# === Flask Logs and PIDs ===
+*.log
+*.pid
+
+# === Environment & Secrets ===
+.env
+.env.*
+*.pem
+*.key
+
+# === Pytest / MyPy / Coverage / Build ===
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.spec  # pyinstaller
+
+# === Docker ===
+*.pid
+docker-compose.override.yml
+
+# === Jupyter Notebooks (Optional) ===
+.ipynb_checkpoints/
+
+# === macOS / Windows System Files ===
+.DS_Store
+Thumbs.db
