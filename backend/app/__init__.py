@@ -30,7 +30,7 @@ def create_app():
         db.create_all()
         if app.config["ENV"] != "production":
             ensure_admin_user() 
-
+            seed_users()
     # 3. Register routes 
     app.register_blueprint(auth_route.auth_route)
     app.register_blueprint(user_route.user_route)
