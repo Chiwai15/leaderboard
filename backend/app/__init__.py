@@ -4,7 +4,7 @@ from flask_cors import CORS
 from app.routes import user_route
 from app.extensions import db, jwt
 from dotenv import load_dotenv
-from app.services.user_service import ensure_admin_user
+from app.utils.setup import ensure_admin_user
 
 load_dotenv()
 
@@ -27,6 +27,7 @@ def create_app():
         if app.config["ENV"] != "production":
             ensure_admin_user() 
 
-    # 3. Register routes + error handlers
+    # 3. Register routes 
     app.register_blueprint(user_route.user_route)
+
     return app
