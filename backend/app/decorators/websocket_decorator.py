@@ -3,6 +3,14 @@ from app.websocket.websocket_manager import WebSocketManager
 from app.repositories.user_repository import UserRepository
 
 def broadcast_event(change_type: str):
+    """
+    Broadcasts a data_change event with the given change_type after the decorated function has been called.
+
+    :param change_type: The type of data change event to broadcast
+    :type change_type: str
+    :return: A decorator function
+    :rtype: Callable[[Callable], Callable]
+    """
     def decorator(fn):
         
         @wraps(fn)

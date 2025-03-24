@@ -11,6 +11,13 @@ class EventLogger:
         user_id: int = None,
         error: str = None,
     ):
+        """
+        Logs an event in the database.
+
+        :param event: The type of event to log
+        :param user_id: The ID of the user associated with the event (optional)
+        :param error: An error message to log with the event (optional)
+        """
         if not has_request_context():
             raise RuntimeError("No request context. Cannot log event.")
 

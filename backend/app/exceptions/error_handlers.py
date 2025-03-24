@@ -7,6 +7,12 @@ IS_DEV = os.getenv("FLASK_ENV", "development") == "production"
 from sqlalchemy.exc import IntegrityError
 
 def register_error_handlers(app):
+    """
+    Registers error handlers for the Flask app to handle various exceptions 
+    such as ValidationError, BaseServiceError, IntegrityError, and generic 
+    exceptions, returning appropriate JSON responses.
+    """
+
     @app.errorhandler(ValidationError)
     def handle_validation_error(e):
         return jsonify({"error": e.messages}), 400

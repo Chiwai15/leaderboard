@@ -5,6 +5,14 @@ from app.constants.enums import EventType
 from app.repositories.user_repository import UserRepository
 
 def log_event_decorator(event_type: EventType):
+    """
+    A decorator that logs a particular event type whenever the decorated function is called successfully (i.e. returns a response with a status code < 400).
+
+    :param event_type: The type of event to log
+    :type event_type: EventType
+    :return: A decorator function that takes a function as an argument
+    :rtype: Callable[[Callable], Callable]
+    """
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):

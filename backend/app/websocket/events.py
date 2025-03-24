@@ -9,6 +9,12 @@ user_sid_map = {}
    
 @socketio.on("connect")
 def handle_connect(auth):
+    """
+    Handle client connection event.
+
+    Upon connection, the client is joined to the global room and the mapping of sid to user_id is stored.
+    If the user already has a previous sid, that sid is disconnected.
+    """
     namespace = request.namespace or "/"  # default
     global_room = socketio.server.manager.rooms[namespace].get("global", {})
     all_sids = list(global_room)
@@ -40,6 +46,11 @@ def handle_connect(auth):
 
 @socketio.on("disconnect")
 def handle_disconnect():
+    """
+    Handle client disconnection event.
+
+    When a client disconnects, the sid to user_id mapping is removed and the user is left from the global room.
+    """
     sid = request.sid
     user_id = sid_user_map.pop(sid, None)
     WebSocketManager.leave_room(sid, "global")
@@ -47,6 +58,11 @@ def handle_disconnect():
 
 @socketio.on("list_global_users")
 def handle_list_global_users():
+    """
+    Handle a request to list all users currently connected to the global room.
+
+    Returns the list of all sids in the global room.
+    """
     namespace = request.namespace or "/"  # default
     global_room = socketio.server.manager.rooms[namespace].get("global", {})
     all_sids = list(global_room)
