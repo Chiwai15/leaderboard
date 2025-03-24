@@ -4,7 +4,7 @@ from flask_cors import CORS
 from app.extensions import celery
 from app.routes import user_route, leaderboard_route, auth_route
 from app.extensions import db, jwt
-from app.utils.setup import ensure_admin_user, seed_users
+from app.utils.setup import clear_sample_users, ensure_admin_user, seed_users
 from app.exceptions.error_handlers import register_error_handlers
 from app.extensions import db, jwt, socketio 
 from dotenv import load_dotenv
@@ -17,6 +17,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///leaderboard.db")
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "")
     app.config["ENV"] = os.getenv("FLASK_ENV", "development")  # default to development
+    app.config["GENERATE_SAMPLE_DATA"] = os.getenv("GENERATE_SAMPLE_DATA", 'False') 
     frontend_origin = os.getenv("FRONTEND_ORIGIN", "*")
     CORS(app, supports_credentials=True, origins=[frontend_origin])
 
@@ -30,7 +31,10 @@ def create_app():
         db.create_all()
         if app.config["ENV"] != "production":
             ensure_admin_user() 
-            seed_users()
+        print(os.getenv("GENERATE_SAMPLE_DATA") + "000000000---------")
+        seed_users() if app.config["GENERATE_SAMPLE_DATA"] == 'True' else clear_sample_users()
+            
+
     # 3. Register routes 
     app.register_blueprint(auth_route.auth_route)
     app.register_blueprint(user_route.user_route)

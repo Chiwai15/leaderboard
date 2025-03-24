@@ -37,3 +37,14 @@ def seed_users():
             user.password_hash = data["password"]  # triggers hash
             db.session.add(user)
     db.session.commit()
+
+def clear_sample_users():
+    # Get the first user (keep this one)
+    first_user = User.query.order_by(User.id.asc()).first()
+
+    if not first_user:
+        return  # No users in DB, nothing to clear
+
+    # Delete all users except the first one
+    User.query.filter(User.id != first_user.id).delete()
+    db.session.commit()

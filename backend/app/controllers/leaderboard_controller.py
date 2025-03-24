@@ -25,8 +25,7 @@ def handle_export_csv():
     Return the leaderboard as a CSV file, ordered by score descending.
     """
     users = LeaderboardService().get_ordered_users()
-    csv_path = LeaderboardService().generate_csv(users)
-    return send_file(csv_path, as_attachment=True)
+    return LeaderboardService().generate_csv(users)
 
 @log_event_decorator(EventType.EXPORT_PDF)
 def handle_export_pdf():
@@ -34,5 +33,5 @@ def handle_export_pdf():
     Return the leaderboard as a PDF file, ordered by score descending.
     """
     users = LeaderboardService().get_ordered_users()
-    pdf_path = LeaderboardService().generate_pdf(users)
-    return send_file(pdf_path, as_attachment=True)
+    return LeaderboardService().generate_pdf(users)
+    

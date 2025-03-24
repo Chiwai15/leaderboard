@@ -1,5 +1,7 @@
 import csv
+import io
 import os
+from flask import send_file
 from fpdf import FPDF
 from datetime import datetime
 
@@ -14,24 +16,33 @@ def ensure_export_dir():
         os.makedirs(EXPORT_DIR)
 
 
-def export_csv(users) -> str:
-    ensure_export_dir()
-    filename = f"{EXPORT_DIR}/leaderboard_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+def export_csv(users):
+    proxy = io.StringIO()
+    writer = csv.writer(proxy)
+    writer.writerow(["UUID", "First Name", "Last Name", "Score", "Gender", "Created At"])
 
-    with open(filename, mode="w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow(["UUID", "First Name", "Last Name", "Score", "Gender", "Created At"])
+    for user in users:
+        writer.writerow([
+            user.uuid,
+            user.firstname,
+            user.lastname,
+            user.score,
+            user.gender,
+            user.created_at.strftime("%Y-%m-%d")
+        ])
 
-        for user in users:
-            writer.writerow([
-                user.uuid,
-                user.firstname,
-                user.lastname,
-                user.score,
-                user.gender,
-                user.created_at.strftime("%Y-%m-%d")
-            ])
-    return filename
+    # Encode to bytes and wrap in BytesIO for Flask
+    mem = io.BytesIO()
+    mem.write(proxy.getvalue().encode("utf-8"))
+    mem.seek(0)
+    proxy.close()
+
+    return send_file(
+        mem,
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name=f"leaderboard_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    )
 
 
 def export_pdf(users) -> str:
@@ -89,5 +100,16 @@ def export_pdf(users) -> str:
             pdf.cell(col_widths[i], 10, item, border=1, align="C")
         pdf.ln()
 
-    pdf.output(filename)
-    return filename
+    # Output to in-memory buffer
+    mem = io.BytesIO()
+    pdf_bytes = pdf.output(dest='S').encode('latin1')
+    mem.write(pdf_bytes)
+    mem.seek(0)
+    
+    return send_file(
+        mem,
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name=f"leaderboard_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+    )
+

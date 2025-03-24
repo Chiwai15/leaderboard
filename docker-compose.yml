@@ -28,6 +28,8 @@ services:
     build:
       context: ./backend
     container_name: leaderboard-api
+    env_file:
+      - .env
     working_dir: /app
     command: gunicorn server:app --reload -c gunicorn.conf.py --access-logfile - --error-logfile -
     ports:
