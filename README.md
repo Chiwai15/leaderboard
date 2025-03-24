@@ -28,13 +28,12 @@ This is a full-stack leaderboard web application built with **Flask** (backend),
 ## 📮 API Documentation (Postman)
 ### You can test the API using the provided Postman Collection.
 
-```bash
 Open Postman and import the file (Included in the repo):
 [Leaderboard.postman_collection.json](https://raw.githubusercontent.com/Chiwai15/leaderboard/refs/heads/main/Leaderboard.postman_collection.json)<br />
 
 Configure your variables in postman
 ![Leaderboard](public/postman.jpg)
-```
+
 
 ## 🧑‍💻 Getting Started
 
