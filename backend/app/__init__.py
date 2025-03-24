@@ -5,6 +5,7 @@ from app.routes import user_route
 from app.extensions import db, jwt
 from dotenv import load_dotenv
 from app.utils.setup import ensure_admin_user
+from app.exceptions.error_handlers import register_error_handlers
 
 load_dotenv()
 
@@ -30,4 +31,6 @@ def create_app():
     # 3. Register routes 
     app.register_blueprint(user_route.user_route)
 
+    # 4. Register error handlers
+    register_error_handlers(app)
     return app
