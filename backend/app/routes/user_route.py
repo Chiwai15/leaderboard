@@ -6,26 +6,11 @@ from app.models.user import User
 from app.validators.login_validator import validate_login_payload
 from app.controllers import user_controller
 from app.utils.auth import admin_required
-from app.websocket.broadcast import broadcast_event
+from app.decorators.websocket_decorator import broadcast_event
 from app.repositories.user_repository import UserRepository
+from app.constants.enums import EventType
 
 user_route = Blueprint("user_route", __name__)
-
-@user_route.route("/login", methods=["POST"])
-def login():
-    data = request.get_json(silent=True) or {}
-    validated = validate_login_payload(data)
-
-    user = User.query.filter_by(username=validated["username"]).first()
-    if not user or not user.check_password(validated["password"]):
-        return jsonify({"error": "Invalid credentials"}), 401
-
-    token = create_access_token(
-        identity=str(user.id),
-        additional_claims={"role": user.role}, 
-        expires_delta=timedelta(hours=2)
-    )
-    return jsonify(access_token=token, role=user.role, user=user.to_dict()), 200
 
 @user_route.route("/users", methods=["GET"])
 @admin_required
@@ -41,33 +26,33 @@ def route_get_user(user_id):
 
 @user_route.route("/users", methods=["POST"])
 @admin_required
-@broadcast_event("user_create")
+@broadcast_event(EventType.USER_CREATE.value)
 def route_create_user():
     return user_controller.handle_create_user()
 
 
 @user_route.route("/users/<string:user_id>", methods=["PATCH"])
 @admin_required
-@broadcast_event("user_update")
+@broadcast_event(EventType.USER_UPDATE.value)
 def route_update_user(user_id):
     return user_controller.handle_update_user(user_id)
 
 
 @user_route.route("/users/<string:user_id>", methods=["DELETE"])
 @admin_required
-@broadcast_event("user_delete")
+@broadcast_event(EventType.USER_DELETE.value)
 def route_delete_user(user_id):
     return user_controller.handle_delete_user(user_id)
 
 @user_route.route("/users/<string:user_id>/increase", methods=["PATCH"])
 @admin_required
-@broadcast_event("score_increase")
+@broadcast_event(EventType.SCORE_INCREASE.value)
 def route_increase_score(user_id):
     print(f'route_increase_score: {user_id}')
     return user_controller.handle_score_increase(user_id)
 
 @user_route.route("/users/<string:user_id>/decrease", methods=["PATCH"])
 @admin_required
-@broadcast_event("score_decrease")
+@broadcast_event(EventType.SCORE_DECREASE.value)
 def route_decrease_score(user_id):
     return user_controller.handle_score_decrease(user_id)

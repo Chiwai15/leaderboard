@@ -9,8 +9,8 @@ export type User = {
 };
 
 type DataChangePayload =
-  | { event: "score_decrease" | "score_increase"; data: { uuid: string } }
-  | { event: "user_delete" | "user_create" | "user_update"; data: {} };
+  | { event: "SCORE_DECREASE" | "SCORE_INCREASE"; data: { uuid: string } }
+  | { event: "USER_DELETE" | "USER_CREATE" | "USER_UPDATE"; data: {} };
 
 export const registerUserTableEventHandler = (
   socket: Socket,
@@ -24,7 +24,7 @@ export const registerUserTableEventHandler = (
         if (!data) return;
       
         switch (event) {
-          case "score_decrease":
+          case "SCORE_DECREASE":
             setUsers(
               getUsers().map((user) =>
                 user.uuid === data.uuid
@@ -34,7 +34,7 @@ export const registerUserTableEventHandler = (
             );
             break;
       
-          case "score_increase":
+          case "SCORE_INCREASE":
             setUsers(
               getUsers().map((user) =>
                 user.uuid === data.uuid
@@ -44,7 +44,7 @@ export const registerUserTableEventHandler = (
             );
             break;
       
-            case "user_delete":
+            case "USER_DELETE":
                 if (!data.uuid) {
                   console.warn("[Event] user_delete missing uuid:", data);
                   break;
@@ -52,8 +52,8 @@ export const registerUserTableEventHandler = (
                 setUsers(getUsers().filter((user) => user.uuid !== data.uuid));
                 break;
           
-              case "user_update":
-              case "user_create":
+              case "USER_UPDATE":
+              case "USER_CREATE":
                 console.log(`[Event] ${event} triggered. Refreshing users.`);
                 fetchUsers(); // Full refresh
                 break;

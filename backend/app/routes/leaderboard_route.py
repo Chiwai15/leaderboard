@@ -6,8 +6,6 @@ from app.controllers.leaderboard_controller import (
     handle_export_csv,
     handle_export_pdf
 )
-from app.websocket.broadcast import broadcast_event
-
 leaderboard_route = Blueprint("leaderboard_route", __name__)
 
 @leaderboard_route.route("/leaderboard", methods=["GET"])

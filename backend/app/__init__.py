@@ -1,12 +1,14 @@
 import os
 from flask import Flask
 from flask_cors import CORS
-from app.routes import user_route, leaderboard_route
+from app.extensions import celery
+from app.routes import user_route, leaderboard_route, auth_route
 from app.extensions import db, jwt
 from app.utils.setup import ensure_admin_user, seed_users
 from app.exceptions.error_handlers import register_error_handlers
 from app.extensions import db, jwt, socketio 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Create Flask app
@@ -28,10 +30,9 @@ def create_app():
         db.create_all()
         if app.config["ENV"] != "production":
             ensure_admin_user() 
-            seed_users()
-
 
     # 3. Register routes 
+    app.register_blueprint(auth_route.auth_route)
     app.register_blueprint(user_route.user_route)
     app.register_blueprint(leaderboard_route.leaderboard_route)
 
@@ -40,5 +41,18 @@ def create_app():
 
     # 5. Register websocket events    
     from app.websocket import events 
+
+    # 6. Configure Celery
+    celery.conf.update(    
+        task_routes={"*": {"queue": "default"}},
+        task_default_queue="default",
+        task_serializer="json", 
+        result_serializer="json", 
+        timezone="UTC", 
+        enable_utc=True, 
+        broker_connection_retry_on_startup = True, 
+        broker_connection_max_retries = 3, 
+        broker_connection_retry_delay = 5
+    )
     return app
 

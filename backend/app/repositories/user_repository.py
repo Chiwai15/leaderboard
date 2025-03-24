@@ -10,6 +10,10 @@ class UserRepository:
 
     def get_by_username(self, username: str) -> User | None:
         return User.query.filter_by(username=username).first()
+    
+    def get_id_by_uuid(self, uuid: str) -> User | None:
+        user = User.query.filter_by(uuid=uuid).first()
+        return user.id if user else None
 
     def get_all(self) -> list[User]:
         return User.query.all()
