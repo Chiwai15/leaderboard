@@ -1,0 +1,45 @@
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 30px;
+  box-shadow:
+    0 0 8px rgba(57, 185, 136, 0.5),
+    0 0 16px rgba(57, 185, 136, 0.3);
+  overflow: hidden;
+  padding: 4px 8px;
+  max-width: 150px;
+}
+
+.qty-btn {
+  background: linear-gradient(to bottom, rgb(24, 18, 47), rgb(12, 50, 48), rgb(10, 111, 118));
+  color: white;
+  border: none;
+  width: 27px;
+  height: 26px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+  font-family: "Poppins", sans-serif;
+  margin-left: 0px;
+}
+
+.qty-btn:hover {
+  transform: scale(0.95);
+}
+
+.qty-display {
+  min-width: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0 12px;
+  color: #222;
+  font-family: "Poppins", sans-serif;
+}
