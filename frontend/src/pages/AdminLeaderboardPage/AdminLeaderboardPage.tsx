@@ -24,13 +24,7 @@ import {
   changeUserScore,
 } from "@/services/userApi";
 
-type User = {
-  uuid: string;
-  firstname: string;
-  lastname: string;
-  gender: string;
-  score: number;
-};
+import { User } from "@/utils/types";
 
 const AdminLeaderboardPage: React.FC = () => {
   const navigate = useNavigate();

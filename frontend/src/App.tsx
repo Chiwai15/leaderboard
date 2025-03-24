@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLeaderboardPage from "./pages/AdminLeaderboardPage/AdminLeaderboardPage";
 import UserLeaderboardPage from "./pages/UserLeaderboardPage/UserLeaderboardPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
