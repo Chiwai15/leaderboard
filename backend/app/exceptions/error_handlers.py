@@ -3,7 +3,7 @@ from flask import jsonify
 from marshmallow.exceptions import ValidationError
 from app.exceptions.base import BaseServiceError
 from app.exceptions.transformers import transform_integrity_error, transform_validation_error
-IS_DEV = os.getenv("FLASK_ENV", "production") == "development"
+IS_DEV = os.getenv("FLASK_ENV", "development") == "production"
 from sqlalchemy.exc import IntegrityError
 
 def register_error_handlers(app):
@@ -27,6 +27,6 @@ def register_error_handlers(app):
 
     @app.errorhandler(Exception)
     def handle_unexpected_error(e):
-        if IS_DEV:
+        if True:
             return jsonify({"error": str(e), "type": type(e).__name__}), 500
         return jsonify({"error": "Something went wrong"}), 500

@@ -4,6 +4,8 @@ import { getToken, getUser } from "@/services/auth";
 import { useNavigate } from "react-router-dom";
 import "./UserLeaderboardPage.css";
 import Navbar from "@/components/Navbar/Navbar";
+import { registerUserTableEventHandler } from "@/socket/eventHandler";
+import { getSocket } from "@/socket/websocket";
 
 const UserLeaderboardPage: React.FC = () => {
   const [users, setUsers] = useState([]);
@@ -20,10 +22,18 @@ const UserLeaderboardPage: React.FC = () => {
     API.get("/leaderboard", { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
         const sorted = [...res.data].sort((a, b) => b.score - a.score);
-        setUsers(sorted);
+        setUsers(res.data);
       })
       .catch(() => navigate("/"));
   };
+
+  useEffect(() => {
+    const socket = getSocket();
+    if (socket) {
+      registerUserTableEventHandler(socket, () => users, setUsers, fetchUsers);
+    }
+  }, [users]);
+
 
   const getRankEmoji = (index: number) => {
     const emojis = ["👑", "🥈", "🥉"];

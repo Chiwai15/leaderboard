@@ -6,6 +6,8 @@ from app.models.user import User
 from app.validators.login_validator import validate_login_payload
 from app.controllers import user_controller
 from app.utils.auth import admin_required
+from app.websocket.broadcast import broadcast_event
+from app.repositories.user_repository import UserRepository
 
 user_route = Blueprint("user_route", __name__)
 
@@ -20,7 +22,7 @@ def login():
 
     token = create_access_token(
         identity=str(user.id),
-        additional_claims={"role": user.role},
+        additional_claims={"role": user.role}, 
         expires_delta=timedelta(hours=2)
     )
     return jsonify(access_token=token, role=user.role, user=user.to_dict()), 200
@@ -39,27 +41,33 @@ def route_get_user(user_id):
 
 @user_route.route("/users", methods=["POST"])
 @admin_required
+@broadcast_event("user_create")
 def route_create_user():
     return user_controller.handle_create_user()
 
 
 @user_route.route("/users/<string:user_id>", methods=["PATCH"])
 @admin_required
+@broadcast_event("user_update")
 def route_update_user(user_id):
     return user_controller.handle_update_user(user_id)
 
 
 @user_route.route("/users/<string:user_id>", methods=["DELETE"])
 @admin_required
+@broadcast_event("user_delete")
 def route_delete_user(user_id):
     return user_controller.handle_delete_user(user_id)
 
 @user_route.route("/users/<string:user_id>/increase", methods=["PATCH"])
 @admin_required
+@broadcast_event("score_increase")
 def route_increase_score(user_id):
+    print(f'route_increase_score: {user_id}')
     return user_controller.handle_score_increase(user_id)
 
 @user_route.route("/users/<string:user_id>/decrease", methods=["PATCH"])
 @admin_required
+@broadcast_event("score_decrease")
 def route_decrease_score(user_id):
     return user_controller.handle_score_decrease(user_id)

@@ -8,6 +8,8 @@ import { showToastOnce } from "@/utils/toastUtils";
 import { toast } from "react-toastify";
 import { filterFields } from "@/utils/objectUtils";
 import { handleApiError } from "@/utils/errorUtils";
+import { registerUserTableEventHandler } from "@/socket/eventHandler";
+import { getSocket } from "@/socket/websocket";
 
 import Navbar from "@/components/Navbar/Navbar";
 import UserModal from "@/components/UserModal/UserModal";
@@ -57,6 +59,14 @@ const AdminLeaderboardPage: React.FC = () => {
     if (!token) navigate("/");
     else fetchUsers();
   }, []);
+
+
+  useEffect(() => {
+    const socket = getSocket();
+    if (socket) {
+      registerUserTableEventHandler(socket, () => users, setUsers, fetchUsers);
+    }
+  }, [users]);
 
   const fetchUsers = () => {
     getUsers(headers)

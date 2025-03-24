@@ -1,13 +1,12 @@
 import os
 from flask import Flask
 from flask_cors import CORS
-from app.routes import user_route
+from app.routes import user_route, leaderboard_route
 from app.extensions import db, jwt
-from dotenv import load_dotenv
 from app.utils.setup import ensure_admin_user, seed_users
 from app.exceptions.error_handlers import register_error_handlers
-from app.routes import leaderboard_route
-
+from app.extensions import db, jwt, socketio 
+from dotenv import load_dotenv
 load_dotenv()
 
 # Create Flask app
@@ -19,9 +18,10 @@ def create_app():
     frontend_origin = os.getenv("FRONTEND_ORIGIN", "*")
     CORS(app, supports_credentials=True, origins=[frontend_origin])
 
-    # 1. Initialize extensions, order matters
+    # 1. Initialize extensions
     db.init_app(app)
     jwt.init_app(app)
+    socketio.init_app(app)
 
     # 2. App context: DB create, ensure superuser
     with app.app_context():
@@ -37,4 +37,8 @@ def create_app():
 
     # 4. Register error handlers
     register_error_handlers(app)
+
+    # 5. Register websocket events    
+    from app.websocket import events 
     return app
+
