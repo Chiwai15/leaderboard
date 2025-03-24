@@ -26,3 +26,6 @@ class UserRepository:
     def delete(self, user: User) -> None:
         db.session.delete(user)
         db.session.commit()
+
+    def get_leaderboard_ordered(self):
+        return User.query.order_by(User.score.desc()).all()

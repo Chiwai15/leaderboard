@@ -8,7 +8,7 @@ from app.repositories.user_repository import UserRepository
 class UserProfileService:
     def __init__(self, user_repo):
         self.user_repo = user_repo
-    def create_user_from_data(data: dict, repo: UserRepository) -> User:
+    def create_user_from_data(self, data: dict, repo: UserRepository) -> User:
         allowed_fields = ["username", "firstname", "lastname", "gender", "score", "role"]
         user = User()
 
@@ -21,7 +21,7 @@ class UserProfileService:
 
         return repo.create(user)  # delegate persistence
 
-    def update_user_fields(user: User, data: dict, repo: UserRepository) -> User:
+    def update_user_fields(self, user: User, data: dict, repo: UserRepository) -> User:
         allowed_fields = ["username", "firstname", "lastname", "gender", "score"]
 
         for field in allowed_fields:
