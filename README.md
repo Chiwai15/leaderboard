@@ -1,6 +1,6 @@
 # 🏆 Leaderboard App
 
-This is a full-stack leaderboard web application built with **Flask** (backend), **React + Vite** (frontend), **MySQL**, and **Redis**. It supports real-time updates via **WebSockets**, authentication with **JWT**, and is fully Dockerized.
+This is a full-stack leaderboard web application built with **Flask** (backend), **React + Vite** (frontend), **MySQL**, **Redis**, and **Celery**. It supports real-time leaderboard updates via **WebSockets**, user authentication with **JWT**, and is fully Dockerized for easy local development.
 
 ---
 
@@ -8,8 +8,9 @@ This is a full-stack leaderboard web application built with **Flask** (backend),
 
 - Admin/user roles with JWT authentication
 - Real-time leaderboard updates via WebSocket
-- Admin CRUD and export (CSV, PDF)
-- Docker-based local development (frontend, backend, MySQL, Redis)
+- Admin CRUD operations and data export (CSV, PDF)
+- **Asynchronous event logging using Celery + Redis, stored in MySQL**
+- Docker-based local development with services for frontend, backend, MySQL, Redis, and Celery
 
 ---
 
@@ -28,8 +29,11 @@ This is a full-stack leaderboard web application built with **Flask** (backend),
 ### You can test the API using the provided Postman Collection.
 
 ```bash
-Open Postman and import the file:
-Leaderboard.postman_collection.json
+Open Postman and import the file (Included in the repo):
+[Leaderboard.postman_collection.json](https://raw.githubusercontent.com/Chiwai15/leaderboard/refs/heads/main/Leaderboard.postman_collection.json)<br />
+
+Configure your variables in postman
+![Leaderboard](public/postman.jpg)
 ```
 
 ## 🧑‍💻 Getting Started
@@ -70,7 +74,7 @@ cd <project-folder>
 
 ### 2. Copy and configure environment variables
 ```bash
-cp backend/.env.example backend/.env
+cp .env.example .env
 # Edit .env if needed (e.g., DB password, secret keys)
 ```
 
@@ -87,7 +91,22 @@ Backend API: http://localhost:5001
 
 MySQL: localhost:3306
 user: root
-password: root default
+password: root 
+
+First super user would be generated
+user: admin
+password: amdin 
+```
+
+### 5. A default superuser will be created automatically on first run:
+```bash
+Username: admin  
+Password: admin
+```
+You can customize these credentials in the .env file:
+```bash
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin
 ```
 
 ## 🗑 Clean up
