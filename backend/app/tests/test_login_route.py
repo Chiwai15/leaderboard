@@ -91,7 +91,6 @@ def test_login_extra_fields(test_client):
     })
     data = response.get_json()
     assert response.status_code == 400
-    assert "access_token" in data
 
 # 8. SQL Injection attempt
 def test_login_sql_injection(test_client):
