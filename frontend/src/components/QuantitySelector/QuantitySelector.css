@@ -43,3 +43,10 @@
   color: #222;
   font-family: "Poppins", sans-serif;
 }
+
+@media (max-width: 500px) {
+    .quantity-selector {
+      transform: scale(0.8);
+      transform-origin: center;
+    }
+  }

@@ -164,3 +164,23 @@
     background-color: #f0f0f0;   
   }
   
+  @media (max-width: 601px) {
+    .user-form{
+        background-color: white;
+        gap: 0.3rem;
+    }
+    .user-row {
+      padding: 6px 12px;
+      gap: 0.8rem;
+    }
+    .actions {
+        gap: 0.8rem;
+    }
+    .info {
+        font-size: 0.7rem;
+    }
+    .avatar {
+        min-width: 30px;
+        height: 30px;
+    }
+  }
