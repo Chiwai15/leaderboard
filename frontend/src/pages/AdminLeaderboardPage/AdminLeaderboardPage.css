@@ -1,6 +1,5 @@
 .container {
   padding: 1rem;
-  background-color: #F2F3F7;
   min-width: 375px;
   overflow: hidden;
   background-color: #0F0423;
@@ -20,11 +19,13 @@
   color: #39B888; 
   font-weight: 600;
 }
+
 .content-wrapper {
   max-width: 1000px;
   margin: 0 auto;
   width: 90%;
 }
+
 .action-bar {
   display: flex;
   justify-content: space-between;

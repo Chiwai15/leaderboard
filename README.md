@@ -38,8 +38,9 @@ Configure your variables in postman
 
 ### 🏞️ Preview
 ![Login](public/login.jpg)
-![Leaderboard](public/admin-leaderboard.jpg)
+![AdminLeaderboard](public/admin-leaderboard.jpg)
 ![Leaderboard](public/leaderboard.jpg)
+![UserModal](public/user-modal.jpg)
 ![csv](public/csv.jpg)
 ![pdf](public/pdf.jpg)
 ![eventlog](public/eventlog.jpg)

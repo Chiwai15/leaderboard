@@ -10,6 +10,7 @@ import { filterFields } from "@/utils/objectUtils";
 import { handleApiError } from "@/utils/errorUtils";
 import { registerUserTableEventHandler } from "@/socket/eventHandler";
 import { getSocket } from "@/socket/websocket";
+import { motion } from "framer-motion";
 
 import Navbar from "@/components/Navbar/Navbar";
 import UserModal from "@/components/UserModal/UserModal";
@@ -183,7 +184,12 @@ const AdminLeaderboardPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.8 }}    
+    >
       <Navbar />
       <div className="container">
         <div className="content-wrapper">
@@ -283,7 +289,7 @@ const AdminLeaderboardPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

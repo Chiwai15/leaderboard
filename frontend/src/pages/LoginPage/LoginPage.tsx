@@ -4,6 +4,7 @@ import API from "@/services/api";
 import { saveTokenWithRole } from "@/services/auth";
 import "./LoginPage.css";
 import { connectSocket } from "@/socket/websocket";
+import { motion } from "framer-motion";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -41,29 +42,36 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <form onSubmit={handleSubmit}>
-           
-            <h1>Leaderboard</h1>
-            <h4>Login to your account</h4>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="password" 
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Login</button>
-        </form>
-        {error && <p className="error">{error}</p>}
-      </div>
-    </div>
+    <motion.div
+    initial={{ opacity: 0, y: 12 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -12 }}
+    transition={{ duration: 0.8 }}  
+    >
+        <div className="login-container">
+        <div className="login-box">
+            <form onSubmit={handleSubmit}>
+            
+                <h1>Leaderboard</h1>
+                <h4>Login to your account</h4>
+            <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+                type="password" 
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">Login</button>
+            </form>
+            {error && <p className="error">{error}</p>}
+        </div>
+        </div>
+    </motion.div>
   );
 };
 

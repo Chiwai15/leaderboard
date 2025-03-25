@@ -1,14 +1,18 @@
 .user-container {
     padding: 1rem;
-    background-color: #F2F3F7;
     min-width: 375px;
     overflow: hidden;
+    background-color: #0F0423;
   }
   
   .greeting-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+  
+  .greeting-text{
+      color: white;
   }
   
   .greeting-name {
@@ -21,7 +25,6 @@
     margin: 0 auto;
     width: 90%;
   }
-
   .user-form {
     display: flex;
     flex-wrap: wrap;

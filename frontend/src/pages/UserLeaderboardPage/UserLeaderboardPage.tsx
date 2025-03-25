@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { registerUserTableEventHandler } from "@/socket/eventHandler";
 import { getSocket } from "@/socket/websocket";
 import { User } from "@/utils/types";
+import { motion } from "framer-motion";
 
 const UserLeaderboardPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -49,7 +50,12 @@ const UserLeaderboardPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -12 }}
+        transition={{ duration: 0.3 }}
+    >
       <Navbar />
       <div className="user-container">
         <div className="content-wrapper">
@@ -81,7 +87,7 @@ const UserLeaderboardPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
