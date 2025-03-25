@@ -23,6 +23,9 @@ def ensure_admin_user():
         db.session.commit()
 
 def seed_users():
+    if User.query.count() > 1: # super admin is already created
+        print("⚠️  Users already exist. Skipping seed.")
+        return
     for data in test_users:
         if not User.query.filter_by(username=data["username"]).first():
             user = User(

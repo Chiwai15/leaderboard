@@ -35,9 +35,9 @@ def create_app(config_override=None):
         db.create_all()
         if app.config["ENV"] != "production":
             ensure_admin_user() 
-        seed_users() if app.config["GENERATE_SAMPLE_DATA"] == 'True' else clear_sample_users()
-            
-
+        if app.config["GENERATE_SAMPLE_DATA"] == 'True':
+            seed_users()
+        
     # 3. Register routes 
     app.register_blueprint(auth_route.auth_route)
     app.register_blueprint(user_route.user_route)
