@@ -1,5 +1,4 @@
-from marshmallow import Schema, fields, validate, ValidationError
-
+from marshmallow import Schema, ValidationError, fields, validate
 
 class CreateUserSchema(Schema):
     username = fields.Str(required=True, validate=validate.Length(min=3, max=30))
@@ -7,8 +6,8 @@ class CreateUserSchema(Schema):
     firstname = fields.Str(required=True, validate=validate.Length(min=1))
     lastname = fields.Str(required=True, validate=validate.Length(min=1))
     gender = fields.Str(required=True, validate=validate.OneOf(["male", "female", "other"]))
-    score = fields.Int(missing=0)
-    role = fields.Str(missing="user", validate=validate.OneOf(["user", "admin"]))
+    score = fields.Int(load_default=0)
+    role = fields.Str(load_default="user", validate=validate.OneOf(["user", "admin"]))
 
 
 class UpdateUserSchema(Schema):

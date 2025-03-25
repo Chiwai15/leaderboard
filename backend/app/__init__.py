@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Create Flask app
-def create_app():
+def create_app(config_override=None):
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///leaderboard.db")
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "")
@@ -20,6 +20,10 @@ def create_app():
     app.config["GENERATE_SAMPLE_DATA"] = os.getenv("GENERATE_SAMPLE_DATA", 'False') 
     frontend_origin = os.getenv("FRONTEND_ORIGIN", "*")
     CORS(app, supports_credentials=True, origins=[frontend_origin])
+
+    # Apply override config if provided (e.g., for testing)
+    if config_override:
+        app.config.update(config_override)
 
     # 1. Initialize extensions
     db.init_app(app)
@@ -31,7 +35,6 @@ def create_app():
         db.create_all()
         if app.config["ENV"] != "production":
             ensure_admin_user() 
-        print(os.getenv("GENERATE_SAMPLE_DATA") + "000000000---------")
         seed_users() if app.config["GENERATE_SAMPLE_DATA"] == 'True' else clear_sample_users()
             
 
@@ -41,8 +44,7 @@ def create_app():
     app.register_blueprint(leaderboard_route.leaderboard_route)
 
     # 4. Register error handlers
-    register_error_handlers(app)
-
+    register_error_handlers(app) 
     # 5. Register websocket events    
     from app.websocket import events 
 

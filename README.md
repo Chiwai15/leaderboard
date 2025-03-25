@@ -43,6 +43,7 @@ Configure your variables in postman
 ![Leaderboard](public/leaderboard.jpg)
 ![csv](public/csv.jpg)
 ![pdf](public/pdf.jpg)
+![eventlog](public/eventlog.jpg)
 
 ### 📦 Prerequisites
 

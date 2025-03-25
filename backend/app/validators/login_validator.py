@@ -1,17 +1,25 @@
-from typing import Annotated, Literal
+from marshmallow import Schema, fields, validate, pre_load
 
-from pydantic import BaseModel, StringConstraints
 
-UsernameStr = Annotated[str, StringConstraints(strip_whitespace=True, min_length=3, max_length=80)]
-FirstnameStr = Annotated[str, StringConstraints(min_length=1, max_length=80)]
-LastnameStr = Annotated[str, StringConstraints(min_length=1, max_length=80)]
-PasswordStr = Annotated[str, StringConstraints(min_length=5, max_length=255)]
-GenderStr = Literal["male", "female", "other"]
+class LoginPayloadSchema(Schema):
+    username = fields.Str(
+        required=True,
+        validate=validate.Length(min=3, max=80),
+    )
+    password = fields.Str(
+        required=True,
+        validate=validate.Length(min=5, max=255),
+    )
 
-class LoginPayload(BaseModel):
-    username: UsernameStr
-    password: PasswordStr
+    @pre_load
+    def strip_username(self, data, **kwargs):
+        if "username" in data and isinstance(data["username"], str):
+            data["username"] = data["username"].strip()
+        return data
 
+
+# Optional: helper function similar to your validate_login_payload
 def validate_login_payload(data: dict) -> dict:
-    return LoginPayload(**data).model_dump()
-     
+
+    schema = LoginPayloadSchema()
+    return schema.load(data)
