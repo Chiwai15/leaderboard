@@ -1,5 +1,5 @@
 // src/pages/AdminLeaderboardPage.tsx
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaEye } from "react-icons/fa";
 import { getToken, getUserRole } from "@/services/auth";
@@ -32,7 +32,9 @@ const AdminLeaderboardPage: React.FC = () => {
   const token = getToken();
   const role = getUserRole();
   const headers = { Authorization: `Bearer ${token}` };
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "view-edit">("create");
@@ -62,6 +64,20 @@ const AdminLeaderboardPage: React.FC = () => {
       registerUserTableEventHandler(socket, () => users, setUsers, fetchUsers);
     }
   }, [users]);
+
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 150); // Delay before closing
+  };
 
   const fetchUsers = () => {
     getUsers(headers)
@@ -218,12 +234,18 @@ const AdminLeaderboardPage: React.FC = () => {
               + Add User
             </button>
 
-            <div className="export-dropdown">
-              <button className="export-btn">Export ▼</button>
-              <div className="export-options">
-                <div onClick={() => handleExport("csv")}>Export CSV</div>
-                <div onClick={() => handleExport("pdf")}>Export PDF</div>
-              </div>
+            <div
+                className="export-dropdown"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                <button className="export-btn">Export ▼</button>
+                {isDropdownOpen && (
+                <div className={`export-options ${isDropdownOpen ? "visible" : "hidden"}`}>
+                    <div onClick={() => handleExport("csv")}>Export CSV</div>
+                    <div onClick={() => handleExport("pdf")}>Export PDF</div>
+                </div>
+                )}
             </div>
           </div>
 

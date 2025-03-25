@@ -58,7 +58,6 @@
 }
 
 .export-options {
-  display: none;
   position: absolute;
   right: 0;
   background: white;
@@ -66,13 +65,9 @@
   z-index: 999;
   border-radius: 6px;
   overflow: hidden;
-  margin-top: 5px;
-  
+  margin-top: 5px; 
 }
 
-.export-dropdown:hover .export-options {
-  display: block;
-}
 
 .export-options div {
   padding: 0.5rem 1rem;
@@ -82,13 +77,18 @@
   transition: background-color 0.2s ease;
 }
 
+.export-options div:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    position: relative; /* Needed for z-index to work */
+  }
+
 .export-options div:last-child {
     border-bottom: none;
 }
 
-.export-options div:hover {
-  background-color: #eee;
-}
+
 .user-form {
   display: flex;
   flex-wrap: wrap;
