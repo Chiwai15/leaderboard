@@ -19,7 +19,6 @@ This is a full-stack leaderboard web application built with **Flask** (backend),
 - **Frontend:** React 19, Vite, TypeScript, Socket.IO
 - **Backend:** Python, Flask, SQLAlchemy, Celery, Redis
 - **Database:** MySQL 8
-- **Async Task Queue:** Redis + Celery
 - **Asynchronous event logging** using **Celery + Redis**
 - **DevOps:** Docker, Docker Compose
 
