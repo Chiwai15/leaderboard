@@ -51,7 +51,7 @@ const UserLeaderboardPage: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="container">
+      <div className="user-container">
         <div className="content-wrapper">
           <div className="greeting-row">
             <h2 className="greeting-text">Hello,</h2>

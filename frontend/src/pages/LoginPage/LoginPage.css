@@ -21,9 +21,9 @@
   padding: 2rem;
   border-radius: 10px;
   box-shadow:
-    0 0 15px rgba(57, 185, 136, 0.6),   /* soft neon green outer glow */
-    0 0 30px rgba(57, 185, 136, 0.4),   /* secondary spread */
-    0 0 60px rgba(57, 185, 136, 0.2);   /* long laser glow */
+    0 0 15px 3px rgba(57, 185, 136, 0.6),   /* soft neon green outer glow */
+    0 0 30px 3px rgba(57, 185, 136, 0.4),   /* secondary spread */
+    0 0 60px 3px rgba(57, 185, 136, 0.2);   /* long laser glow */
   backdrop-filter: blur(10px); /* frost effect (optional) */
   width: 90%;
   max-width: 350px;

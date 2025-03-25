@@ -47,14 +47,12 @@ const UserModal: React.FC<UserModalProps> = ({
     setIsEditing(mode === "create");
   }, [mode, visible]);
 
-  if (!visible) return null;
-
   const handleChange = (field: string, value: string | number) => {
     setNewUser({ ...newUser, [field]: value });
   };
 
   return (
-    <div className="modal-overlay">
+    <div className={`modal-overlay ${visible ? 'active' : ''}`}>
       <div className="modal-box">
         <h3>
           {mode === "create"

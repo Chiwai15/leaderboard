@@ -1,4 +1,4 @@
-.container {
+.user-container {
     padding: 1rem;
     background-color: #F2F3F7;
     min-width: 375px;
@@ -17,74 +17,11 @@
   }
   
   .content-wrapper {
-    max-width: 1800px;
+    max-width: 1000px;
     margin: 0 auto;
     width: 90%;
   }
-  
-  .action-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .add-user-btn {
-    background-color: #39B888;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  
-  .export-dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .export-btn {
-    background-color: #045018;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .export-options {
-    display: none;
-    position: absolute;
-    right: 0;
-    background: white;
-    border: 1px solid #ffffff;
-    z-index: 999;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-top: 5px;
-  }
-  
-  .export-dropdown:hover .export-options {
-    display: block;
-  }
-  
-  .export-options div {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    white-space: nowrap;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s ease;
-  }
-  
-  .export-options div:last-child {
-    border-bottom: none;
-  }
-  
-  .export-options div:hover {
-    background-color: #eee;
-  }
-  
+
   .user-form {
     display: flex;
     flex-wrap: wrap;

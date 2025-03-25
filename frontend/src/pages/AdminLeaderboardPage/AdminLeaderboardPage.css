@@ -3,6 +3,7 @@
   background-color: #F2F3F7;
   min-width: 375px;
   overflow: hidden;
+  background-color: #0F0423;
 }
 
 .greeting-row {
@@ -11,12 +12,16 @@
   gap: 0.5rem;
 }
 
+.greeting-text{
+    color: white;
+}
+
 .greeting-name {
   color: #39B888; 
   font-weight: 600;
 }
 .content-wrapper {
-  max-width: 1800px;
+  max-width: 1000px;
   margin: 0 auto;
   width: 90%;
 }
@@ -43,7 +48,7 @@
 }
 
 .export-btn {
-  background-color: #045018;
+  background-color: #39B888;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
