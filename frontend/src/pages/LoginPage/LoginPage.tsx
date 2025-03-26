@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "@/services/api";
 import { saveTokenWithRole } from "@/services/auth";
 import "./LoginPage.css";
 import { connectSocket } from "@/socket/websocket";
 import { motion } from "framer-motion";
+import { createNodeNetwork } from "@/utils/createNodeNetwork";
+
 
 const LoginPage: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState(""); 
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (canvasRef.current) {
+      createNodeNetwork(canvasRef.current);
+    }
+  }, []);
+
+  
   const handleLogin = async () => {
     try {
       const res = await API.post("/login", { username, password });
@@ -49,6 +60,7 @@ const LoginPage: React.FC = () => {
     transition={{ duration: 0.8 }}  
     >
         <div className="login-container">
+        {/* <canvas ref={canvasRef} className="animated-bg" /> */}
         <div className="login-box">
             <form onSubmit={handleSubmit}>
             
