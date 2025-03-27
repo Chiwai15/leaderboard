@@ -52,9 +52,10 @@
 input,
 .login-box select {
   padding: 0.75rem 1rem;
-  border: 1px solid #d4d6d9;
+  border: 0px solid #ffffff;
   border-radius: 30px;
   font-size: 1rem;
+  background-color: #eff6fa;
 }
 
 .login-box input::placeholder {
