@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import jwt_required, get_jwt
 from flask import jsonify
 import jwt
@@ -10,7 +10,7 @@ TOKEN_EXPIRY_HOURS = 2
 def generate_token(user_id: int):
     payload = {
         "user_id": user_id,
-        "exp": datetime.utcnow() + timedelta(hours=TOKEN_EXPIRY_HOURS)
+        "exp": datetime.now(timezone.utc) + timedelta(hours=TOKEN_EXPIRY_HOURS)
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
     return token

@@ -22,5 +22,5 @@ RUN pip install watchdog && \
 # Copy app
 COPY . .
 
-# Default command (can be overridden by docker-compose.override.yml)
-CMD gunicorn --worker-class eventlet -w 1 app:app
+# Default command (can be overridden by docker-compose.override.yml) , eventlet worker (for WebSocket support)
+CMD gunicorn --worker-class eventlet -w 1 server:app -c gunicorn.conf.py --access-logfile - --error-logfile -

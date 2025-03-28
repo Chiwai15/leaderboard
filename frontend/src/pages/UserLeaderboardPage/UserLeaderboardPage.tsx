@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import API from "@/services/api";
 import { getToken, getUser } from "@/services/auth";
 import { useNavigate } from "react-router-dom";
 import "./UserLeaderboardPage.css";
@@ -8,41 +7,44 @@ import { registerUserTableEventHandler } from "@/socket/eventHandler";
 import { getSocket } from "@/socket/websocket";
 import { User } from "@/utils/types";
 import { motion } from "framer-motion";
+import { getUsers } from "@/services/userApi";
+import { showToastOnce } from "@/utils/toastUtils";
+import { toast } from "react-toastify";
 
 const UserLeaderboardPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const navigate = useNavigate();
-  const userData = getUser();
-  if (!userData) {
-    navigate("/");
-    return null; // or handle the null case appropriately
-  }
   const token = getToken();
-  const me: User = JSON.parse(userData);
+  const userData = getUser();
+  const headers = { Authorization: `Bearer ${token}` };
+  const me: User | null = userData ? JSON.parse(userData) : null;
 
   useEffect(() => {
-    if (!token) {
+    if (!me) {
       navigate("/");
     } else {
-      fetchUsers(token);
+      fetchUsers();
     }
-  }, [token]);
-
-  const fetchUsers = (token: string) => {
-    API.get<User[]>("/leaderboard", { headers: { Authorization: `Bearer ${token}` } })
-    .then((res) => {
-      const sorted = [...res.data].sort((a, b) => b.score - a.score);
-      setUsers(sorted);
-    })
-    .catch(() => navigate("/"));
-  };
+  }, []);
 
   useEffect(() => {
     const socket = getSocket();
     if (socket) {
-      registerUserTableEventHandler(socket, () => users, setUsers, () => fetchUsers(token!));
+      registerUserTableEventHandler(socket, () => users, setUsers, fetchUsers);
     }
-  }, [users, token]);
+  }, [users]);
+
+  if (!me) return null;
+
+  const fetchUsers = () => {
+    getUsers(headers)
+    .then((res) => setUsers(res.data))
+          .catch((err) => {
+            const msg = err?.response?.data?.error || "Failed to fetch users.";
+            showToastOnce(msg, toast.error);
+            navigate("/");
+    });
+  };
 
   const getRankEmoji = (index: number): string | null => {
     const emojis = ["👑", "🥈", "🥉"];

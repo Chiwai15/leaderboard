@@ -63,7 +63,7 @@ const AdminLeaderboardPage: React.FC = () => {
     if (socket) {
       registerUserTableEventHandler(socket, () => users, setUsers, fetchUsers);
     }
-  }, [users]);
+  }, [users]); // Run this useEffect whenever the value of users changes.
 
 
   const handleMouseEnter = () => {
@@ -147,7 +147,7 @@ const AdminLeaderboardPage: React.FC = () => {
       })
       .catch((err) => {
         const msg = err?.response?.data?.error || "Failed to delete user.";
-        showToastOnce(msg, toast.error);
+        showToastOnce(msg[0], toast.error);
       });
   };
 
@@ -193,10 +193,16 @@ const AdminLeaderboardPage: React.FC = () => {
       window.URL.revokeObjectURL(url);
 
       showToastOnce(`${type.toUpperCase()} exported`, toast.success);
-    } catch (err: any) {
-      const msg = err?.response?.data?.error || `${type.toUpperCase()} export failed.`;
-      showToastOnce(msg, toast.error);
-    }
+    } catch (err: unknown) {
+        const fallbackMsg = `${type.toUpperCase()} export failed.`;
+    
+        const msg =
+          (err as any)?.response?.data?.error ||
+          (err as Error)?.message ||
+          fallbackMsg;
+    
+        showToastOnce(msg, toast.error);
+      }
   };
 
   return (

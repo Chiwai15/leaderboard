@@ -45,6 +45,7 @@ def create_app(config_override=None):
 
     # 4. Register error handlers
     register_error_handlers(app) 
+    
     # 5. Register websocket events    
     from app.websocket import events 
 

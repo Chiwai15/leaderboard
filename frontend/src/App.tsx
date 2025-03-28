@@ -18,10 +18,10 @@ const App: React.FC = () => {
   return (
     <>
         <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/admin-leaderboard" element={<AdminLeaderboardPage />} />
-        <Route path="/leaderboard" element={<UserLeaderboardPage />} />
-        <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/admin-leaderboard" element={<AdminLeaderboardPage />} />
+            <Route path="/leaderboard" element={<UserLeaderboardPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <ToastContainer position="top-center" autoClose={1000} limit={2} />
     </>

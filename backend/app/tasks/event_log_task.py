@@ -1,15 +1,13 @@
 from app.extensions import celery
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 
 @celery.task(name="log_event_task")
 def log_event_task(event, request_meta, user_id=None, error=None):
-    from app.constants.enums import EventType  # optional late import
-
     try:
-        print(f"[LogEventTask] Starting log for event: {event}")
-        print(f"[LogEventTask] Meta: {request_meta}")
-        print(f"[LogEventTask] User ID: {user_id},  Error: {error}")
+        print(f"🟢[LogEventTask] Starting log for event: {event}")
+        print(f"🟢[LogEventTask] Meta: {request_meta}")
+        print(f"🟢[LogEventTask] User ID: {user_id},  Error: {error}")
 
         from app import create_app
         from app.extensions import db
@@ -19,7 +17,7 @@ def log_event_task(event, request_meta, user_id=None, error=None):
 
         with app.app_context():
             log = EventLog(
-                created_at=datetime.utcnow(),
+                created_at=datetime.now(timezone.utc),
                 method=request_meta.get("method"),
                 event=event,
                 route=request_meta.get("route"),

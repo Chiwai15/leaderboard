@@ -20,6 +20,5 @@ class LoginPayloadSchema(Schema):
 
 # Optional: helper function similar to your validate_login_payload
 def validate_login_payload(data: dict) -> dict:
-
     schema = LoginPayloadSchema()
     return schema.load(data)

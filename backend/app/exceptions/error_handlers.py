@@ -33,6 +33,6 @@ def register_error_handlers(app):
 
     @app.errorhandler(Exception)
     def handle_unexpected_error(e):
-        if True:
+        if not IS_PROD:
             return jsonify({"error": str(e), "type": type(e).__name__}), 500
         return jsonify({"error": "Something went wrong"}), 500
